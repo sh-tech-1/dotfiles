@@ -24,6 +24,7 @@
 =brew install --cask firefox
 =brew install --cask google-trends
 # Chat soft
+=brew install --cask franz
 =brew install --cask slack
 =brew install --cask chatwork
 # video player
