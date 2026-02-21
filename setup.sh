@@ -6,6 +6,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # Create symbolic links
 ln -nsf $HOME/dotfiles/.procs.toml $HOME/.procs.toml
 ln -nsf $HOME/dotfiles/.zshrc $HOME/.zshrc
+ln -nsf $HOME/dotfiles/.zshrc.local $HOME/.zshrc.local
 ln -nsf $HOME/dotfiles/.vimrc $HOME/.config/nvim/init.vim
 ln -nsf $HOME/dotfiles/.fdignore $HOME/.fdignore
 ln -nsf $HOME/dotfiles/webpack.config.js $HOME/webpack.config.js
