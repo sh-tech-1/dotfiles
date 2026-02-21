@@ -15,8 +15,13 @@ claude-feature() {
     echo "Worktree will be based on the current branch."
   fi
 
-  git worktree add "../$branch" -b "$branch"
-  cd "../$branch" || return 1
+  local repo_name
+  repo_name=$(basename "$(git rev-parse --show-toplevel)")
+  local worktree_dir="../git-worktree/$repo_name/$branch"
+
+  mkdir -p "../git-worktree/$repo_name"
+  git worktree add "$worktree_dir" -b "$branch"
+  cd "$worktree_dir" || return 1
 
   exec claude --permission-mode plan
 }
