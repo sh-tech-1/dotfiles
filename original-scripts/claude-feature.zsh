@@ -25,3 +25,26 @@ claude-feature() {
 
   exec claude --permission-mode plan
 }
+
+claude-feature-cleanup() {
+  local branch="$1"
+
+  if [ -z "$branch" ]; then
+    echo "Usage: claude-feature-cleanup <feature-name>"
+    return 1
+  fi
+
+  local repo_name
+  repo_name=$(basename "$(git rev-parse --show-toplevel)")
+  local worktree_dir="../git-worktree/$repo_name/$branch"
+
+  # worktree内にいる場合はメインリポジトリに戻る
+  local toplevel
+  toplevel=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [ "$(basename "$toplevel")" = "$branch" ]; then
+    cd "$(git worktree list --porcelain | head -1 | sed 's/worktree //')" || return 1
+  fi
+
+  git worktree remove "$worktree_dir" && echo "Worktree removed: $worktree_dir"
+  git branch -d "$branch" 2>/dev/null && echo "Branch deleted: $branch"
+}
