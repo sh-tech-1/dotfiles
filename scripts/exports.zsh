@@ -4,10 +4,9 @@ export PATH=/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:$HO
 export ZSH="$HOME/.oh-my-zsh"
 export GOPATH=$HOME/.go
 export GO111MOD=on
-#export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_231`
 export ENHANCD_FILTER="fzf --reverse --ansi"
 export ENHANCD_DISABLE_DOT=1
 export TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling
 export PS1="%~ $"
-# Export Github Tokens
-#\source $HOME/.github_tokens
+export DOCKER_CONTENT_TRUST=1
+export OPENSSH="/usr/local/opt/openssh"

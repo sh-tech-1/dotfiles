@@ -23,12 +23,6 @@ setopt magic_equal_subst
 
 PROMPT="%n@%m(`uname -m`) %1~ $ "
 
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
@@ -49,13 +43,10 @@ source $HOME/scripts/aliases.zsh
 source $HOME/scripts/fzf.zsh
 source $HOME/scripts/git.zsh
 source $HOME/scripts/aws.zsh
+source $HOME/original-scripts/claude-feature.zsh
 
-source $HOME/original-scripts/docker_compose.zsh
-source $HOME/original-scripts/clasp.zsh
-source $HOME/original-scripts/firebase.zsh
+# rust
+source "$HOME/.cargo/env"
 
-export OPENSSH="/usr/local/opt/openssh"
-
-
-
-source $HOME/scripts/initialize.zsh
+# Load local overrides (tokens, secrets, machine-specific config)
+[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local

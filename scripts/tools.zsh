@@ -10,7 +10,7 @@ make-brew-installed() {
   \git add "$path1"
   \git add "$path2"
   \git commit -m "Update homebrew"
-  \git push origin master
+  \git push origin $(_get_default_branch)
   cd $oldpwd
 }
 

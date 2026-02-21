@@ -1,15 +1,24 @@
 _GIT_DIFF_FILES=
+
+_get_default_branch() {
+  local ref
+  ref=$(\git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null)
+  echo "${ref#refs/remotes/origin/}"
+}
+
 _get_git_branch() {
   ref=$(\git symbolic-ref HEAD 2> /dev/null)
   echo "${ref#refs/heads/}"
 }
 
 _get_git_diff_files() {
+  local default_branch
+  default_branch=$(_get_default_branch)
   ref=$(_get_git_branch)
-  if [[ $ref == 'master' ]]; then
+  if [[ $ref == "$default_branch" ]]; then
     return 1
   fi
-  _GIT_DIFF_FILES=$(\git diff --name-only --diff-filter=ACMR origin/master...HEAD)
+  _GIT_DIFF_FILES=$(\git diff --name-only --diff-filter=ACMR "origin/${default_branch}...HEAD")
   if [[ ! $? =~ ^(0|130)$ ]]; then
     return 1
   fi
@@ -46,13 +55,14 @@ fzf-checkout-files() {
 }
 
 fzf-reset-files() {
-  local target
+  local target default_branch
+  default_branch=$(_get_default_branch)
   _get_git_diff_files
   if [[ $? == 1 ]]; then
     return 1
   fi
   target=$(echo "$_GIT_DIFF_FILES" | awk '$0 ~ /./{print $0}' | fzf --prompt "FILE HISTORY> ")
-  \git reset master -- "$target"
+  \git reset "$default_branch" -- "$target"
   \git checkout -- "$target"
 }
 
@@ -80,7 +90,9 @@ enhanced-gitalias() {
       ;;
     esac
   fi
-  if [[ $1 == 'reset' ]] && [[ $2 == 'master' ]]; then
+  local default_branch
+  default_branch=$(_get_default_branch)
+  if [[ $1 == 'reset' ]] && [[ $2 == "$default_branch" ]]; then
     case "$3" in
       "--")
         if [[ $4 == '' ]]; then
@@ -95,4 +107,4 @@ enhanced-gitalias() {
   \git $@
 }
 
-alias git='enhanced-\gitalias'
+alias git='enhanced-gitalias'

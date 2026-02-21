@@ -1,6 +1,5 @@
 show-error() {
   echo >&2
-  # /bin/cat $HOME/scripts/.error_cat >&2
 }
 
 error_catcher_preexec() {

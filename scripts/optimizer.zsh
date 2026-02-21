@@ -26,13 +26,11 @@ optimize_history_precmd() {
   unset OPTIMIZE_HISTORY_CALLED
 }
 
-
 #
 # Ref: https://gist.github.com/znppunfuv/060107438d8ea06d623f0cbcb019950f
 #
 add-zsh-hook preexec optimize_history_preexec
 add-zsh-hook precmd optimize_history_precmd
-
 
 # Optimize oh-my-zsh ---------------------------------------------------------------------------------------------------
 # Optimize copy & paste
@@ -47,7 +45,6 @@ pastefinish() {
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
-
 
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
