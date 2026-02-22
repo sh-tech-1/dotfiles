@@ -90,17 +90,19 @@ enhanced-gitalias() {
       ;;
     esac
   fi
-  local default_branch
-  default_branch=$(_get_default_branch)
-  if [[ $1 == 'reset' ]] && [[ $2 == "$default_branch" ]]; then
-    case "$3" in
-      "--")
-        if [[ $4 == '' ]]; then
-          fzf-reset-files
-          return
-        fi
-      ;;
-    esac
+  if [[ $1 == 'reset' ]]; then
+    local default_branch
+    default_branch=$(_get_default_branch)
+    if [[ $2 == "$default_branch" ]]; then
+      case "$3" in
+        "--")
+          if [[ $4 == '' ]]; then
+            fzf-reset-files
+            return
+          fi
+        ;;
+      esac
+    fi
   fi
 
   # shellcheck disable=SC2068
