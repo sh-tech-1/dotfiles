@@ -19,7 +19,7 @@ echo "==> Volta (node toolchain manager)"
 [[ -d "$HOME/.volta" ]] || curl -fsSL https://get.volta.sh | bash -s -- --skip-setup
 
 echo "==> directories"
-mkdir -p "$HOME/.config/nvim/autoload" "$HOME/.ssh/sockets"
+mkdir -p "$HOME/.config/nvim/autoload" "$HOME/.config/karabiner" "$HOME/.ssh/sockets"
 chmod 700 "$HOME/.ssh" "$HOME/.ssh/sockets"
 
 echo "==> symlinks"
@@ -33,6 +33,7 @@ link "$DOTFILES/webpack.config.js" "$HOME/webpack.config.js"
 link "$DOTFILES/scripts"           "$HOME/scripts"
 link "$DOTFILES/original-scripts"  "$HOME/original-scripts"
 link "$DOTFILES/.ssh/config"       "$HOME/.ssh/config"
+link "$DOTFILES/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 
 # machine-specific overrides (tokens / secrets) — created empty, never committed
 [[ -f "$HOME/.zshrc.local" ]] || touch "$HOME/.zshrc.local"
@@ -59,8 +60,5 @@ if command -v fzf >/dev/null 2>&1; then
 	"$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish 2>/dev/null || true
 fi
 
-echo "==> macOS key-repeat"
-defaults write -g InitialKeyRepeat -int 10
-defaults write -g KeyRepeat -int 5
-
 echo "==> done. Run 'exec zsh' (or open a new terminal) to load the config."
+echo "    (system defaults incl. key-repeat are set by defaults.sh)"
