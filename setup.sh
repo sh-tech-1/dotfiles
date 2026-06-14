@@ -19,7 +19,7 @@ echo "==> Volta (node toolchain manager)"
 [[ -d "$HOME/.volta" ]] || curl -fsSL https://get.volta.sh | bash -s -- --skip-setup
 
 echo "==> directories"
-mkdir -p "$HOME/.config/nvim/autoload" "$HOME/.config/karabiner" "$HOME/.ssh/sockets"
+mkdir -p "$HOME/.config/nvim/autoload" "$HOME/.config/karabiner" "$HOME/.ssh/sockets" "$HOME/.claude"
 chmod 700 "$HOME/.ssh" "$HOME/.ssh/sockets"
 
 echo "==> symlinks"
@@ -34,6 +34,9 @@ link "$DOTFILES/scripts"           "$HOME/scripts"
 link "$DOTFILES/original-scripts"  "$HOME/original-scripts"
 link "$DOTFILES/.ssh/config"       "$HOME/.ssh/config"
 link "$DOTFILES/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+# Claude Code: only the (non-sensitive) global settings.json is versioned here.
+# agents/ and rules/ are intentionally NOT tracked (this repo is public).
+link "$DOTFILES/claude/settings.json"     "$HOME/.claude/settings.json"
 
 # machine-specific overrides (tokens / secrets) — created empty, never committed
 [[ -f "$HOME/.zshrc.local" ]] || touch "$HOME/.zshrc.local"

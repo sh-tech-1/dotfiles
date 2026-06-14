@@ -22,4 +22,3 @@ alias qq='pbpaste'
 # misc
 alias t='twterm'
 alias dc='docker-compose'
-alias ai-assistant='cd ~/products/business-ai-assistant'

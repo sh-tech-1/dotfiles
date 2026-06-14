@@ -35,6 +35,10 @@ Or run the steps individually (all idempotent / re-runnable):
 | `~/scripts`, `~/original-scripts` | `scripts/`, `original-scripts/` |
 | `~/.ssh/config` | `.ssh/config` |
 | `~/.config/karabiner/karabiner.json` | `karabiner/karabiner.json` |
+| `~/.claude/settings.json` | `claude/settings.json` |
+
+> Claude Code: only the global `settings.json` (model selection) is versioned.
+> `~/.claude/agents` and `~/.claude/rules` are kept out of this **public** repo.
 
 ## Machine-specific secrets
 
