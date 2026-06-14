@@ -1,33 +1,44 @@
-typeset -U path PATH
-path=(
-	/opt/homebrew/bin(N-/)
-	/usr/local/bin(N-/)
-	$path
-)
+# ============================================================================
+# .zshrc — symlinked to ~/.zshrc by setup.sh  (Apple Silicon default)
+# ============================================================================
 
-if (( $+commands[sw_vers] )) && (( $+commands[arch] )); then
-	[[ -x /usr/local/bin/brew ]] && alias brew="arch -arch x86_64 /usr/local/bin/brew"
-	alias x64='exec arch -x86_64 /bin/zsh'
-	alias a64='exec arch -arm64e /bin/zsh'
-	switch-arch() {
-		if  [[ "$(uname -m)" == arm64 ]]; then
-			arch=x86_64
-		elif [[ "$(uname -m)" == x86_64 ]]; then
-			arch=arm64e
-		fi
-		exec arch -arch $arch /bin/zsh
-	}
+# --- Re-exec natively if launched under Rosetta ------------------------------
+if [[ "$(arch)" != arm64 ]]; then
+	exec arch -arm64 /bin/zsh "$@"
 fi
+
+typeset -U path PATH
+
+# --- Homebrew (Apple Silicon) ------------------------------------------------
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# --- Optional Intel / Rosetta helpers ----------------------------------------
+# `brew` stays native (above). Use `ibrew` for an x86_64 Homebrew if installed.
+[[ -x /usr/local/bin/brew ]] && alias ibrew="arch -arch x86_64 /usr/local/bin/brew"
+alias x64='exec arch -x86_64 /bin/zsh'
+alias a64='exec arch -arm64e /bin/zsh'
 
 setopt magic_equal_subst
 
+# Prompt: user@host(arch) cwd — keeps the active machine / arch visible.
 PROMPT="%n@%m(`uname -m`) %1~ $ "
 
+# --- Node (Volta) ------------------------------------------------------------
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+path=("$VOLTA_HOME/bin" $path)
 
-source $HOME/scripts/exports.zsh
+# --- oh-my-zsh ---------------------------------------------------------------
+source $HOME/scripts/exports.zsh            # sets $ZSH and base env
+plugins=(
+	git
+	forgit
+	enhancd
+	fzf-zsh-completions
+	dircolors-solarized
+	zsh-autosuggestions
+)
 source $ZSH/oh-my-zsh.sh
+
 source $HOME/scripts/settings.zsh
 source $HOME/scripts/errors.zsh
 
@@ -45,8 +56,16 @@ source $HOME/scripts/git.zsh
 source $HOME/scripts/aws.zsh
 source $HOME/original-scripts/claude-feature.zsh
 
-# rust
-source "$HOME/.cargo/env"
+# rust (cargo) — present only after a rustup install
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
-# Load local overrides (tokens, secrets, machine-specific config)
+# --- Local overrides (tokens, secrets, machine-specific config; untracked) ----
 [[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+
+# --- Syntax highlighting MUST be sourced last --------------------------------
+for _zsh_hl in \
+	$ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+	$ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
+	[[ -f $_zsh_hl ]] && { source $_zsh_hl; break; }
+done
+unset _zsh_hl
