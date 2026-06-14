@@ -41,7 +41,6 @@ link "$DOTFILES/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.jso
 echo "==> zsh plugins"
 clone() { [[ -d "$2" ]] || git clone --depth 1 "$1" "$2"; }
 clone https://github.com/wfxr/forgit.git                      "$ZSH_DIR/plugins/forgit"
-clone https://github.com/seebi/dircolors-solarized.git        "$ZSH_DIR/plugins/dircolors-solarized"
 clone https://github.com/chitoku-k/fzf-zsh-completions.git    "$ZSH_DIR/plugins/fzf-zsh-completions"
 clone https://github.com/b4b4r07/enhancd.git                  "$ZSH_DIR/plugins/enhancd"
 clone https://github.com/zsh-users/zsh-autosuggestions.git    "$ZSH_DIR/plugins/zsh-autosuggestions"

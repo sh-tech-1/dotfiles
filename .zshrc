@@ -20,8 +20,19 @@ alias a64='exec arch -arm64e /bin/zsh'
 
 setopt magic_equal_subst
 
-# Prompt: user@host(arch) cwd — keeps the active machine / arch visible.
-PROMPT="%n@%m(`uname -m`) %1~ $ "
+# --- Prompt ------------------------------------------------------------------
+# path + git branch; user@host prepended only inside an SSH session; the final
+# `$` is green on success / red on the previous command's failure.
+setopt prompt_subst
+autoload -Uz add-zsh-hook vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats ' %F{magenta}%b%f'
+add-zsh-hook precmd vcs_info
+
+_ssh_tag=''
+[[ -n "$SSH_CONNECTION" ]] && _ssh_tag='%F{yellow}%n@%m%f '
+
+PROMPT='${_ssh_tag}%F{cyan}%~%f${vcs_info_msg_0_} %(?.%F{green}.%F{red})$%f '
 
 # --- Node (Volta) ------------------------------------------------------------
 export VOLTA_HOME="$HOME/.volta"
@@ -34,7 +45,6 @@ plugins=(
 	forgit
 	enhancd
 	fzf-zsh-completions
-	dircolors-solarized
 	zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
