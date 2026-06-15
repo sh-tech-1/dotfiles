@@ -22,6 +22,7 @@ Or run the steps individually (all idempotent / re-runnable):
 ./defaults.sh   # macOS system defaults (Finder, key repeat, mouse, shortcuts)
 ./setup.sh      # oh-my-zsh, Volta, symlinks, zsh/tmux/vim plugins
 ./homebrew.sh   # CLI tools + apps
+./dock.sh       # rebuild the Dock from the curated app list (needs dockutil)
 ```
 
 ## What setup.sh links

@@ -14,7 +14,8 @@ brew install \
 	tmux byobu \
 	dust bottom procs hexyl tokei tree \
 	wget tldr lazydocker \
-	awscli
+	awscli \
+	dockutil
 
 # --- Python (pyenv) ----------------------------------------------------------
 brew install pyenv pyenv-virtualenv

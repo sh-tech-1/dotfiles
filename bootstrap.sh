@@ -9,6 +9,7 @@ cd "$(dirname "$0")"
 ./defaults.sh
 ./setup.sh
 ./homebrew.sh
+./dock.sh        # needs apps + dockutil from homebrew.sh
 
 echo
 echo "Bootstrap complete — run 'exec zsh' to load the new shell."
