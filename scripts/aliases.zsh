@@ -19,6 +19,9 @@ alias pip='pip3'
 alias q='pbcopy'
 alias qq='pbpaste'
 
+# projects
+alias orivia='cd ~/products/orivia'
+
 # misc
 alias t='twterm'
 alias dc='docker-compose'
