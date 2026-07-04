@@ -21,6 +21,8 @@ alias qq='pbpaste'
 
 # projects
 alias orivia='cd ~/products/orivia'
+alias creges='cd ~/products/creges-corporate'
+alias english-edge='cd ~/products/english-edge'
 
 # misc
 alias t='twterm'
